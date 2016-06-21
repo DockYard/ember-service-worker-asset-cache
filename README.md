@@ -1,26 +1,31 @@
-# Ember-service-worker-asset-cache
+# Ember Service Worker Asset Cache
 
-This README outlines the details of collaborating on this Ember addon.
+_An Ember Service Worker plugin that caches an Ember app's asset files_
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+```
+ember install ember-service-worker-asset-cache
+```
 
-## Running
+## Authors
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+* [Marten Schilstra](http://twitter.com/martndemus)
 
-## Running Tests
+## Versioning
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+This library follows [Semantic Versioning](http://semver.org)
 
-## Building
+## Want to help?
 
-* `ember build`
+Please do! We are always looking to improve this library. Please see our
+[Contribution Guidelines](https://github.com/dockyard/ember-service-worker-asset-cache/blob/master/CONTRIBUTING.md)
+on how to properly submit issues and pull requests.
 
-For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
+## Legal
+
+[DockYard](http://dockyard.com/), Inc. &copy; 2016
+
+[@dockyard](http://twitter.com/dockyard)
+
+[Licensed under the MIT license](http://www.opensource.org/licenses/mit-license.php)
