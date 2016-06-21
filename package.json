@@ -40,7 +40,8 @@
     "loader.js": "^4.0.1"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-service-worker-plugin"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.6"
