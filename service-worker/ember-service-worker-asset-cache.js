@@ -1,10 +1,10 @@
-var CACHE_NAME = `asset-cache-${VERSION}`;
+var CACHE_NAME = 'asset-cache-' + VERSION;
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        cache.add('/');
+        cache.add(self.registration.scope);
         return fetch('assets/assetMap.json').then(function(response) {
           return response.json();
         }).then(function(json) {
@@ -13,7 +13,7 @@ self.addEventListener('install', function(event) {
           });
         }).then(function(files) {
           return cache.addAll(files);
-        });
+        }).catch(function() { });
       })
   );
 });
@@ -34,5 +34,17 @@ self.addEventListener('fetch', function(event) {
         return fetch(event.request);
       }
     )
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      cacheNames.forEach(function(cacheName) {
+        if (cacheName !== CACHE_NAME) {
+          caches.delete(cacheName);
+        }
+      });
+    })
   );
 });
