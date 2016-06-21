@@ -41,7 +41,7 @@ self.addEventListener('activate', function(event) {
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       cacheNames.forEach(function(cacheName) {
-        if (cacheName !== CACHE_NAME) {
+        if (cacheName.indexOf('asset-cache-') === 0 && cacheName !== CACHE_NAME) {
           caches.delete(cacheName);
         }
       });
