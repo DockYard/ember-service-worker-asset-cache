@@ -44,6 +44,7 @@
     "ember-service-worker-plugin"
   ],
   "dependencies": {
+    "broccoli-filter": "^1.2.3",
     "ember-cli-babel": "^5.1.6"
   },
   "ember-addon": {

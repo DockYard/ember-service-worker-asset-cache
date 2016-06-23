@@ -5,14 +5,14 @@ self.addEventListener('install', function(event) {
     caches.open(CACHE_NAME)
       .then(function(cache) {
         cache.add(self.registration.scope);
-        return fetch('assets/assetMap.json').then(function(response) {
+        return fetch('files.json').then(function(response) {
           return response.json();
         }).then(function(json) {
-          return Object.keys(json.assets).map(function(key) {
-            return json.assets[key];
+          var paths = json.files.map(function(file) {
+            return json.prepend ? json.prepend + file : file
           });
-        }).then(function(files) {
-          return cache.addAll(files);
+
+          return cache.addAll(paths);
         }).catch(function() { });
       })
   );
