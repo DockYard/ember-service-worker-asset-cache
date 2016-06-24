@@ -13,28 +13,22 @@ self.addEventListener('install', function(event) {
           });
 
           return cache.addAll(paths);
-        }).catch(function() { });
+        }).catch(function() {
+        });
       })
   );
 });
 
-self.addEventListener('fetch', function(event) {
-  const request = event.request;
-  const url = new URL(event.request.url);
-
-  if(url.origin !== location.origin) return;
-
-  event.respondWith(
-    caches.match(event.request, { cacheName: CACHE_NAME })
-      .then(function(response) {
-        if (response) {
-          return response;
-        }
-
-        return fetch(event.request);
+self.addFetchListener(function(event) {
+  return caches
+    .match(event.request, { cacheName: CACHE_NAME })
+    .then(function(response) {
+      if (response) {
+        return response;
+      } else if (event.request.headers.get('accept').indexOf('text/html') >= 0) {
+        return caches.match(self.registration.scope);
       }
-    )
-  );
+    })
 });
 
 self.addEventListener('activate', function(event) {
