@@ -8,11 +8,13 @@ self.addEventListener('install', function(event) {
         return fetch('files.json').then(function(response) {
           return response.json();
         }).then(function(json) {
-          var paths = json.files.map(function(file) {
+          var files = json.files.map(function(file) {
             return json.prepend ? json.prepend + file : file
+          }).map(function(path) {;
+            return new Request(path, { mode: 'no-cors' })
           });
 
-          return cache.addAll(paths);
+          return cache.addAll(files);
         }).catch(function() {
         });
       })
