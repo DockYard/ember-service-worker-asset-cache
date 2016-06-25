@@ -17,7 +17,7 @@ module.exports = {
     }
   },
 
-  postprocessTree(type, tree) {
+  postprocessTree: function(type, tree) {
     if (type === 'all') {
       return AssetMap(tree, this.app.options['asset-cache']);
     }
