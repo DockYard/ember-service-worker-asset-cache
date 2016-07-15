@@ -1,3 +1,5 @@
+import { VERSION, addFetchListener } from 'ember-service-worker/service-worker';
+
 var CACHE_NAME = 'asset-cache-' + VERSION;
 
 self.addEventListener('install', function(event) {
@@ -9,9 +11,9 @@ self.addEventListener('install', function(event) {
           return response.json();
         }).then(function(json) {
           var files = json.files.map(function(file) {
-            return json.prepend ? json.prepend + file : file
-          }).map(function(path) {;
-            return new Request(path, { mode: 'no-cors' })
+            return json.prepend ? json.prepend + file : file;
+          }).map(function(path) {
+            return new Request(path, { mode: 'no-cors' });
           });
 
           return cache.addAll(files);
@@ -21,7 +23,7 @@ self.addEventListener('install', function(event) {
   );
 });
 
-self.addFetchListener(function(event) {
+addFetchListener(function(event) {
   return caches
     .match(event.request, { cacheName: CACHE_NAME })
     .then(function(response) {
@@ -30,7 +32,7 @@ self.addFetchListener(function(event) {
       } else if (event.request.headers.get('accept').indexOf('text/html') >= 0) {
         return caches.match(self.registration.scope);
       }
-    })
+    });
 });
 
 self.addEventListener('activate', function(event) {
