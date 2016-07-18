@@ -1,6 +1,7 @@
-import { VERSION, addFetchListener } from 'ember-service-worker/service-worker';
+import { PROJECT_REVISION, VERSION, addFetchListener } from 'ember-service-worker/service-worker';
 
-var CACHE_NAME = 'asset-cache-' + VERSION;
+const CACHE_KEY_PREFIX = 'asset-cache-';
+const CACHE_NAME = `${CACHE_KEY_PREFIX}${PROJECT_REVISION}-${VERSION}`;
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
@@ -39,7 +40,7 @@ self.addEventListener('activate', function(event) {
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       cacheNames.forEach(function(cacheName) {
-        if (cacheName.indexOf('asset-cache-') === 0 && cacheName !== CACHE_NAME) {
+        if (cacheName.indexOf(CACHE_KEY_PREFIX) === 0 && cacheName !== CACHE_NAME) {
           caches.delete(cacheName);
         }
       });
