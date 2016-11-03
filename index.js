@@ -12,6 +12,9 @@ module.exports = {
     this.app.options = this.app.options || {};
     this.app.options['asset-cache'] = this.app.options['asset-cache'] || {};
 
+    this.app.options['asset-cache'].appName =
+      this.app.name || this.app.options['asset-cache'].appName;
+
     if (this.app.options.fingerprint && this.app.options.fingerprint.enabled) {
       this.app.options['asset-cache'].prepend = this.app.options.fingerprint.prepend;
     }
