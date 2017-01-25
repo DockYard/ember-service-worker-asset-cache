@@ -2,6 +2,7 @@
 'use strict';
 
 var AssetMap = require('./lib/asset-map');
+var mergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
   name: 'ember-service-worker-asset-cache',
@@ -10,21 +11,20 @@ module.exports = {
     this._super.included && this._super.included.apply(this, arguments);
     this.app = app;
     this.app.options = this.app.options || {};
-    this.app.options['asset-cache'] = this.app.options['asset-cache'] || {};
+    this.app.options['service-worker-caching'] = this.app.options['service-worker-caching'] || {};
 
-    this.app.options['asset-cache'].appName =
-      this.app.name || this.app.options['asset-cache'].appName;
+    this.app.options['service-worker-caching'].appName =
+        this.app.name || this.app.options['service-worker-caching'].appName;
 
     if (this.app.options.fingerprint && this.app.options.fingerprint.enabled) {
-      this.app.options['asset-cache'].prepend = this.app.options.fingerprint.prepend;
+      this.app.options['service-worker-caching'].prepend = this.app.options.fingerprint.prepend;
     }
   },
 
-  postprocessTree: function(type, tree) {
-    if (type === 'all') {
-      return AssetMap(tree, this.app.options['asset-cache']);
-    }
+  treeForServiceWorker(swTree, appTree) {
+    var options = this.app.options['service-worker-caching'];
+    var assetMapFile = new AssetMap([appTree], options);
 
-    return tree;
+    return mergeTrees([swTree, assetMapFile]);
   }
 };
