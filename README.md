@@ -2,12 +2,7 @@
 
 _An Ember Service Worker plugin that caches an Ember app's asset files_
 
-By default it caches the following files:
-
-- `assets/app.js`
-- `assets/app.css`
-- `assets/vendor.js`
-- `assets/vendor.css`
+By default it caches all files in the `assets` folder.
 
 ## Installation
 
@@ -28,12 +23,23 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
     'asset-cache': {
-      // glob paths are allowed!
-      includes: [
+      // which asset files to include, glob paths are allowed!
+      // defaults to `['assets/**/*']`
+      include: [
         'assets/admin-engine.js',
         'fonts/font-awesome.*'
       ],
 
+      // which asset files to exclude, glob paths are allowed!
+      exclude: [
+        '**/*.gif'
+      ],
+
+      // changing this version number will bust the cache
+      version: '1',
+
+      // if your files are on a CDN, put the url of your CDN here
+      // defaults to `fingerprint.prepend`
       prepend: 'https://cdn.example.com/'
     }
   });
