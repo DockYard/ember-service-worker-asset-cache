@@ -2,9 +2,9 @@ import {
   files,
   prepend,
   version
-} from 'ember-service-worker-caching/service-worker/config';
+} from 'ember-service-worker-asset-cache/service-worker/config';
 
-const CACHE_KEY_PREFIX = 'esw-caching';
+const CACHE_KEY_PREFIX = 'esw-asset-cache';
 const CACHE_NAME = `${CACHE_KEY_PREFIX}-${version}`;
 const CACHE_URLS = files.map((file) => {
   return new URL(file, (prepend || self.location)).toString();
