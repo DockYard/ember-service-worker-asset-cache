@@ -4,6 +4,11 @@ _An Ember Service Worker plugin that caches an Ember app's asset files_
 
 By default it caches all files in the `assets` folder.
 
+## F#$& my assets aren't updating in development mode
+
+Turn on the "Update on reload" setting in the `Application > Service Workers`
+menu in the Chrome devtools.
+
 ## Installation
 
 ```
