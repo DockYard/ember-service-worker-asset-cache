@@ -14,13 +14,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then((cache) => {
-        return Promise.all(CACHE_URLS.map((url) => {
-          return cache.add(new Request(url, {
-            credentials: 'include'
-          }));
-        }));
-      })
+      .then((cache) => cache.addAll(CACHE_URLS))
   );
 });
 
