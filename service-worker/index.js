@@ -10,6 +10,10 @@ const CACHE_URLS = FILES.map((file) => {
   return new URL(file, (PREPEND || self.location)).toString();
 });
 
+/*
+ * Deletes all caches that start with the `CACHE_KEY_PREFIX`, except for the
+ * cache defined by `CACHE_NAME`
+ */
 const DELETE_STALE_CACHES = () => {
   return caches.keys().then((cacheNames) => {
     cacheNames.forEach((cacheName) => {
@@ -23,6 +27,10 @@ const DELETE_STALE_CACHES = () => {
   });
 };
 
+/*
+ * Removes all cached requests from the cache that aren't in the `CACHE_URLS`
+ * list.
+ */
 const PRUNE_CURRENT_CACHE = () => {
   caches.open(CACHE_NAME).then((cache) => {
     return cache.keys().then((keys) => {
