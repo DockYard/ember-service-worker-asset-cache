@@ -40,6 +40,11 @@ module.exports = function(defaults) {
         '**/*.gif'
       ],
 
+      // manually include extra assets
+      manual: [
+        'https://cdn.example.com/foo-library.js'
+      ],
+
       // changing this version number will bust the cache
       version: '1',
 
