@@ -20,7 +20,7 @@ const DELETE_STALE_CACHES = () => {
       let isAssetCache = cacheName.indexOf(CACHE_KEY_PREFIX) === 0;
       let isNotCurrentCache = cacheName !== CACHE_NAME;
 
-      if (isNotCurrentCache && isNotCurrentCache) {
+      if (isAssetCache && isNotCurrentCache) {
         caches.delete(cacheName);
       }
     });
