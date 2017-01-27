@@ -3,29 +3,13 @@ import {
   PREPEND,
   VERSION
 } from 'ember-service-worker-asset-cache/service-worker/config';
+import cleanupCaches from 'ember-service-worker/service-worker/cleanup-caches';
 
 const CACHE_KEY_PREFIX = 'esw-asset-cache';
 const CACHE_NAME = `${CACHE_KEY_PREFIX}-${VERSION}`;
 const CACHE_URLS = FILES.map((file) => {
   return new URL(file, (PREPEND || self.location)).toString();
 });
-
-/*
- * Deletes all caches that start with the `CACHE_KEY_PREFIX`, except for the
- * cache defined by `CACHE_NAME`
- */
-const DELETE_STALE_CACHES = () => {
-  return caches.keys().then((cacheNames) => {
-    cacheNames.forEach((cacheName) => {
-      let isAssetCache = cacheName.indexOf(CACHE_KEY_PREFIX) === 0;
-      let isNotCurrentCache = cacheName !== CACHE_NAME;
-
-      if (isAssetCache && isNotCurrentCache) {
-        caches.delete(cacheName);
-      }
-    });
-  });
-};
 
 /*
  * Removes all cached requests from the cache that aren't in the `CACHE_URLS`
@@ -54,7 +38,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     Promise.all([
-      DELETE_STALE_CACHES(),
+      cleanupCaches(CACHE_KEY_PREFIX, CACHE_NAME),
       PRUNE_CURRENT_CACHE()
     ])
   );
