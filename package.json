@@ -1,7 +1,7 @@
 {
   "name": "ember-service-worker-asset-cache",
-  "version": "0.6.0-beta.6",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.6.0",
+  "description": "An Ember Service Worker plugin that caches an Ember app's asset files",
   "directories": {
     "doc": "doc",
     "test": "tests"
