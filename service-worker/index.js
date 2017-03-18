@@ -31,7 +31,21 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then((cache) => cache.addAll(CACHE_URLS))
+      .then((cache) => {
+        return Promise.all(CACHE_URLS.map((url) => {
+          let request = new Request(url, { mode: 'no-cors' });
+          return fetch(request)
+            .then((response) => {
+              if (response.status >= 400) {
+                throw new Error(`Request for ${url} failed with status ${response.statusText}`);
+              }
+              return cache.put(url, response);
+            })
+            .catch(function(error) {
+              console.error(`Not caching ${url} due to ${error}`);
+            });
+        }));
+      })
   );
 });
 
@@ -51,6 +65,12 @@ self.addEventListener('fetch', (event) => {
   if (isGETRequest && shouldRespond) {
     event.respondWith(
       caches.match(event.request, { cacheName: CACHE_NAME })
+        .then((response) => {
+          if (response) {
+            return response;
+          }
+          return fetch(event.request);
+        })
     );
   }
 });
