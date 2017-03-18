@@ -1,7 +1,8 @@
 import {
   FILES,
   PREPEND,
-  VERSION
+  VERSION,
+  REQUEST_MODE
 } from 'ember-service-worker-asset-cache/service-worker/config';
 import cleanupCaches from 'ember-service-worker/service-worker/cleanup-caches';
 
@@ -33,7 +34,7 @@ self.addEventListener('install', (event) => {
       .open(CACHE_NAME)
       .then((cache) => {
         return Promise.all(CACHE_URLS.map((url) => {
-          let request = new Request(url, { mode: 'no-cors' });
+          let request = new Request(url, { mode: REQUEST_MODE });
           return fetch(request)
             .then((response) => {
               if (response.status >= 400) {
