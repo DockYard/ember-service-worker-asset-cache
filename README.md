@@ -50,13 +50,20 @@ module.exports = function(defaults) {
 
       // if your files are on a CDN, put the url of your CDN here
       // defaults to `fingerprint.prepend`
-      prepend: 'https://cdn.example.com/'
+      prepend: 'https://cdn.example.com/',
+      
+      // mode of the fetch request. Use 'no-cors' when you are fetching resources
+      // cross origin (different domain) that do not send CORS headers
+      requestMode: 'cors'
     }
   });
 
   return app.toTree();
 };
 ```
+
+*Note that setting `requestMode` to 'no-cors' will have some drawbacks, like not being able to distinguish between
+successful and failed responses. Use it only when needed.*
 
 ## Authors
 
