@@ -23,10 +23,10 @@ you can configure the CDN url.
 The configuration is done in the `ember-cli-build.js` file:
 
 ```js
-var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const EmberApp = require('ember-cli/lib/broccoli/ember-app')
 
 module.exports = function(defaults) {
-  var app = new EmberAddon(defaults, {
+  var app = new EmberApp(defaults, {
     'asset-cache': {
       // which asset files to include, glob paths are allowed!
       // defaults to `['assets/**/*']`
