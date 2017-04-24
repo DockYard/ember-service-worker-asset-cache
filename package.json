@@ -1,6 +1,6 @@
 {
   "name": "ember-service-worker-asset-cache",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "An Ember Service Worker plugin that caches an Ember app's asset files",
   "directories": {
     "doc": "doc",
