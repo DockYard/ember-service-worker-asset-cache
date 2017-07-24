@@ -1,5 +1,7 @@
 # Ember Service Worker Asset Cache
 
+**[ember-service-worker-asset-cache is built and maintained by DockYard, contact us for expert Ember.js consulting](https://dockyard.com/ember-consulting)**.
+
 _An Ember Service Worker plugin that caches an Ember app's asset files_
 
 By default it caches all files in the `assets` folder.
