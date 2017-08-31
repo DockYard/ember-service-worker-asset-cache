@@ -2,7 +2,8 @@ import {
   FILES,
   PREPEND,
   VERSION,
-  REQUEST_MODE
+  REQUEST_MODE,
+  LENIENT_ERRORS
 } from 'ember-service-worker-asset-cache/service-worker/config';
 import cleanupCaches from 'ember-service-worker/service-worker/cleanup-caches';
 
@@ -38,8 +39,16 @@ self.addEventListener('install', (event) => {
           return fetch(request)
             .then((response) => {
               if (response.status >= 400) {
-                throw new Error(`Request for ${url} failed with status ${response.statusText}`);
+                let error = new Error(`Request for ${url} failed with status ${response.statusText}`);
+
+                if (LENIENT_ERRORS) {
+                  console.warning(`Not caching ${url} due to ${error}`);
+                  return;
+                } else {
+                  throw error;
+                }
               }
+
               return cache.put(url, response);
             })
             .catch(function(error) {
