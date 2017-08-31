@@ -56,7 +56,11 @@ module.exports = function(defaults) {
       
       // mode of the fetch request. Use 'no-cors' when you are fetching resources
       // cross origin (different domain) that do not send CORS headers
-      requestMode: 'cors'
+      requestMode: 'cors',
+
+      // Prevent errors (status of 400 or greater) on a single file
+      // from not updating other files that have no issues
+      lenientErrors: true
     }
   });
 
