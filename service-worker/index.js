@@ -42,7 +42,7 @@ self.addEventListener('install', (event) => {
                 let error = new Error(`Request for ${url} failed with status ${response.statusText}`);
 
                 if (LENIENT_ERRORS) {
-                  console.warning(`Not caching ${url} due to ${error}`);
+                  console.warn(`Not caching ${url} due to ${error}`);
                   return;
                 } else {
                   throw error;
