@@ -47,7 +47,9 @@ module.exports = function(defaults) {
         'https://cdn.example.com/foo-library.js'
       ],
 
-      // changing this version number will bust the cache
+      // Changing this version number will bust the cache, but you probably do not
+      // want to be doing this manually, but rather using `versionStrategy` as
+      // explained here http://ember-service-worker.com/documentation/configuration/#versioning
       version: '1',
 
       // if your files are on a CDN, put the url of your CDN here
