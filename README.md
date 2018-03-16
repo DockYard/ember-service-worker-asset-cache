@@ -42,7 +42,7 @@ module.exports = function(defaults) {
         '**/*.gif'
       ],
 
-      // manually include extra assets
+      // manually include extra external assets
       manual: [
         'https://cdn.example.com/foo-library.js'
       ],
