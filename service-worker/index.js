@@ -9,8 +9,9 @@ import cleanupCaches from 'ember-service-worker/service-worker/cleanup-caches';
 
 const CACHE_KEY_PREFIX = 'esw-asset-cache';
 const CACHE_NAME = `${CACHE_KEY_PREFIX}-${VERSION}`;
+const BASE_URL_FOR_CACHE = PREPEND ?  (/^https?/.test(PREPEND) ? PREPEND : self.location.origin + PREPEND ) : self.location;
 const CACHE_URLS = FILES.map((file) => {
-  return new URL(file, (PREPEND || self.location)).toString();
+  return new URL(file,  BASE_URL_FOR_CACHE).toString();
 });
 
 /*

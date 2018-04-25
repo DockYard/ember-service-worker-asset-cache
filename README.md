@@ -52,9 +52,9 @@ module.exports = function(defaults) {
       // explained here http://ember-service-worker.com/documentation/configuration/#versioning
       version: '1',
 
-      // if your files are on a CDN, put the url of your CDN here
+      // if your files are on a CDN, put the url of your CDN here OR you also can specify relative path from your web site absolute path 
       // defaults to `fingerprint.prepend`
-      prepend: 'https://cdn.example.com/',
+      prepend: 'https://cdn.example.com/', // '/feature/'
       
       // mode of the fetch request. Use 'no-cors' when you are fetching resources
       // cross origin (different domain) that do not send CORS headers
