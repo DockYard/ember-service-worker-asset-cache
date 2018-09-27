@@ -68,19 +68,23 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   let isGETRequest = event.request.method === 'GET';
   let shouldRespond = CACHE_URLS.indexOf(event.request.url) !== -1;
 
   if (isGETRequest && shouldRespond) {
     event.respondWith(
-      caches.match(event.request, { cacheName: CACHE_NAME })
-        .then((response) => {
-          if (response) {
-            return response;
-          }
-          return fetch(event.request.url, { mode: REQUEST_MODE });
-        })
-    );
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.match(event.request, { cacheName: CACHE_NAME }).then(response => {
+          return response || fetch(event.request).then(response => {
+            const responseClone = response.clone();
+            cache.put(event.request, responseClone);
+          }).catch(() => {
+            let errorResponse = new Response("Network error happened", {"status" : 408, "headers" : {"Content-Type" : "text/plain"}});
+            cache.put(event.request, errorResponse);
+          });
+        });
+      });
+    )
   }
 });
