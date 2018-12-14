@@ -8,7 +8,7 @@
   },
   "repository": "",
   "engines": {
-    "node": ">= 4.0.0"
+    "node": "6.* || 8.* || >= 10.*"
   },
   "author": "",
   "license": "MIT",
