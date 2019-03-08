@@ -53,9 +53,10 @@ module.exports = function(defaults) {
       version: '1',
 
       // if your files are on a CDN, put the url of your CDN here
-      // defaults to `fingerprint.prepend`
+      // can be absolute or relative
+      // overwritten by `fingerprint.prepend`
       prepend: 'https://cdn.example.com/',
-      
+
       // mode of the fetch request. Use 'no-cors' when you are fetching resources
       // cross origin (different domain) that do not send CORS headers
       requestMode: 'cors',

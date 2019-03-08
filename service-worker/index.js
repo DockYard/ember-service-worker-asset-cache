@@ -9,8 +9,16 @@ import cleanupCaches from 'ember-service-worker/service-worker/cleanup-caches';
 
 const CACHE_KEY_PREFIX = 'esw-asset-cache';
 const CACHE_NAME = `${CACHE_KEY_PREFIX}-${VERSION}`;
+
+// Determine the base url for cache files by testing if the prepend starts with a protocol
+const protocolRegex = /^(?:[a-z0-9]*:)?\/\//i;
+const prependOption = PREPEND  || '';
+const prependIsAbsolute = protocolRegex.test(prependOption);
+const CACHE_BASE_URL = prependIsAbsolute ? prependOption : self.location;
+const CACHE_FILE_PREPEND = prependIsAbsolute || prependOption === '/' ? '' : prependOption;
+
 const CACHE_URLS = FILES.map((file) => {
-  return new URL(file, (PREPEND || self.location)).toString();
+  return new URL(CACHE_FILE_PREPEND + file, CACHE_BASE_URL).toString();
 });
 
 /*
