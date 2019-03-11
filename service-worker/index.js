@@ -78,11 +78,12 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   let isGETRequest = event.request.method === 'GET';
-  let shouldRespond = CACHE_URLS.indexOf(event.request.url) !== -1;
+  let { origin, pathname } = new URL(event.request.url);
+  let shouldRespond = CACHE_URLS.indexOf(`${origin}${pathname}`) !== -1;
 
   if (isGETRequest && shouldRespond) {
     event.respondWith(
-      caches.match(event.request, { cacheName: CACHE_NAME })
+      caches.match(event.request, { cacheName: CACHE_NAME, ignoreSearch: true })
         .then((response) => {
           if (response) {
             return response;
