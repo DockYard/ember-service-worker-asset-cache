@@ -3,7 +3,8 @@ import {
   PREPEND,
   VERSION,
   REQUEST_MODE,
-  LENIENT_ERRORS
+  LENIENT_ERRORS,
+  IGNORE_QUERY_STRING_DEFAULT
 } from 'ember-service-worker-asset-cache/service-worker/config';
 import cleanupCaches from 'ember-service-worker/service-worker/cleanup-caches';
 
@@ -77,12 +78,14 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  let { origin, pathname } = event.request.url;
   let isGETRequest = event.request.method === 'GET';
-  let shouldRespond = CACHE_URLS.indexOf(event.request.url) !== -1;
+  let cacheKey = IGNORE_QUERY_STRING_DEFAULT ? new URL(`${origin}${pathname}`) : event.request.url;
+  let shouldRespond = CACHE_URLS.indexOf(cacheKey) !== -1;
 
   if (isGETRequest && shouldRespond) {
     event.respondWith(
-      caches.match(event.request, { cacheName: CACHE_NAME })
+      caches.match(event.request, { cacheName: CACHE_NAME, ignoreSearch: IGNORE_QUERY_STRING_DEFAULT })
         .then((response) => {
           if (response) {
             return response;
