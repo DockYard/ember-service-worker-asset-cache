@@ -63,7 +63,10 @@ module.exports = function(defaults) {
 
       // Prevent errors (status of 400 or greater) on a single file
       // from not updating other files that have no issues
-      lenientErrors: false
+      lenientErrors: false,
+
+      // Ignores query string parameters when checking for cache hits
+      ignoreQueryString: false,
     }
   });
 
