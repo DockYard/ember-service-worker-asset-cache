@@ -6,7 +6,10 @@
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dockyard/ember-service-worker-asset-cache.git"
+  },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
   },
